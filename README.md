@@ -19,8 +19,10 @@ compiles the firmware. They must be crops from the same 640×480 camera view and
 orientation used at runtime. The component first locates the best template with
 normalized correlation, then applies the same 5-pixel-wide ROI offset, HSV
 threshold, 5×5 morphology, 150-pixel blob filter, and bottom-up row count as the
-Pi script. A missing or weak match makes the fill sensor unavailable (`NaN`),
-rather than reporting a misleading zero.
+Pi script. A missing or weak match leaves the last valid fill percentage
+unchanged while the match confidence sensor still updates. If no valid fill
+reading has been obtained since startup, the fill sensor remains unknown. The
+retained value is kept in memory only and does not survive a restart.
 
 After a valid measurement, the fill sensor accepts a value when it has no
 available reading yet, when the measured level decreases, or when it increases

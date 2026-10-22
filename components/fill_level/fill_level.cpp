@@ -300,7 +300,6 @@ void FillLevel::on_camera_image(const std::shared_ptr<camera::CameraImage> &imag
     this->confidence_sensor_->publish_state(best.image == nullptr ? NAN : best.score);
   if (best.image == nullptr || best.score < this->min_confidence_) {
     ESP_LOGW(TAG, "No reliable template match (score %.2f)", best.score);
-    this->fill_sensor_->publish_state(NAN);
   } else {
     float fill = this->measure_fill(rgb, frame->width, frame->height, best);
     ESP_LOGD(TAG, "Match %.2f at (%d,%d), fill %.2f%%", best.score, best.x, best.y, fill);
